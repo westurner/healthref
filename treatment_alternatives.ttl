@@ -1,0 +1,686 @@
+@prefix : <> . # TODO
+@prefix dbp: <https://en.dbpedia.org/resource/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix td: <http://example.org/ns/todo#> .
+
+
+####
+# Treatment Alternatives and Adverse Effects
+# version: 0.0.1
+# license: CC-BY-SA 3.0 <https://creativecommons.org/licenses/by-sa/3.0/>
+# objective:
+#   create a metadata overlay for / derived from / in addition to
+#   * Wikipedia (CC-By-SA)
+#   * US NIH MedlinePlus (All Rights Reserved)
+
+<>
+  a schema:Dataset ;
+  schema:name "TODO Treatment Alternatives and Adverse Effects"@en ;
+  schema:description "Treatment alternatives, symptoms, and adverse effects"@en ;
+  schema:dateCreated "2014-01-28" ;
+  schema:inLanguage "en" ;
+  .
+
+#
+# There are many reputable sources for medical information.
+# If Wikipedia is wrong, qualified individuals can correct it.
+# If you have a preferred source of free medical information,
+# feel free to add links to additional adequate information.
+# In the United States, is illegal to share patients' medical information
+# without their consent.
+
+## WARNING NOTE:
+#
+# Contraindication listings here are not comprehensive.
+# Read primary sources for complete information on contraindications.
+#
+# This is not medical advice.
+#
+# Read the label / instruction booklet / webpage for:
+#
+# * Precautions / Contraindications
+# * Adverse Effects / Side Effects
+# * Overdose Symptoms
+#
+
+# NOTE:
+# As this ontology uses dbpedia resources as rdf:Class es,
+# it may not validate as-is:
+#   predicate-object pairs like (a dbp:Therapy) are not
+#   technically valid in RDFS or OWL semantics
+# This is a valid RDF document in Turtle syntax.
+
+### td: a local 'TODO' schema:
+td:DrugGroup a rdfs:Class;
+  rdfs:label "Drug Group"@en ;
+  rdfs:comment "Grouping of drugs"@en ;
+  rdfs:subClassOf schema:Thing ;
+  rdfs:isDefinedBy <> ;
+  .
+td:drugGroup a rdf:Property ;
+  rdfs:label "Drug Group"@en ;
+  rdfs:comment "DrugGroup membership predicate"@en ;
+  rdfs:isDefinedBy <> ;
+  .
+td:adverseEffectsLink a rdf:Property ;
+  rdfs:label "Adverse Effects link"@en ;
+  rdfs:comment "URL listing reported adverse effects"@en ;
+  rdfs:isDefinedBy <> ;
+  .
+td:contraindicationsLink a rdf:Property ;
+  rdfs:label "Contraindications link"@en ;
+  rdfs:comment "URL listing reported adverse effects"@en ;
+  rdfs:isDefinedBy <> ;
+  .
+td:AtcLink a rdf:Property ;
+  rdfs:label "ATC link"@en ;
+  rdfs:comment "ATC wikipedia URL"@en ;
+  rdfs:isDefinedBy <> ;
+  .
+td:medlineLink a rdf:Property ;
+  rdfs:label "Medline link"@en ;
+  rdfs:comment "Link to a related Medline Article"@en ;
+  rdfs:isDefinedby <> ;
+  .
+td:wikipediaLink a rdf:Property ;
+  rdfs:label "Wikipedia link"@en ;
+  rdfs:comment "Link to a related Wikipedia Article"@en ;
+  rdfs:isDefinedBy <> ;
+  .
+
+
+td:effect a rdf:Property ; # TODO: reify
+  rdfs:label "Effect"@en ;
+  rdfs:comment "Intended effect"@en ;
+  rdfs:isDefinedBy <> ;
+  .
+td:sideEffect a rdf:Property ; # TODO: reify
+  rdfs:label "Effect"@en ;
+# In the United States, is illegal to share patients' medical information
+# without their consent.
+  rdfs:comment "Side effect / adverse effect (unpleasant effect)"@en ;
+  rdfs:isDefinedBy <> ;
+  .
+td:contraindication a rdf:Property ; # TODO: reify
+  rdfs:label "Contraindication"@en ;
+  rdfs:comment "A contraindication"@en ;
+  schema:description "A contraindication is a reason for avoiding a treatment (drug interactions, existing conditions, pregnancy)"@en ;
+  rdfs:idDefinedBy <> ;
+  .
+td:symptomsLink a rdf:Property ;
+  rdfs:label "Symptoms"@en ;
+  rdfs:comment "Link to a page containing symptoms"@en ;
+  rdfs:isDefinedBy <> ;
+  .
+td:causedByLink a rdf:Property ;
+  rdfs:label "Caused By"@en ;
+  rdfs:comment "Link to a known cause"@en ;
+  rdfs:isDefinedBy <> ;
+  .
+
+## labels
+
+rdf:type a rdf:Property ;
+  rdfs:label "a"@en ;
+  .
+rdfs:label
+  rdfs:label "Label"@en ;
+  .
+schema:alternateName
+  rdfs:label "Alternate Name"@en ;
+  .
+owl:sameAs
+  rdfs:label "Same As"@en ;
+  .
+
+
+### Treatments
+
+## analgesics
+dbp:Analgesic
+  a td:DrugGroup ;
+  rdfs:label "Analgesic"@en ;
+  schema:alternateName "Pain Killer"@en ;
+  td:AtcLink dbp:ATC_code_N02 ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Analgesic> ;
+  .
+
+dbp:Antipyretic
+  a td:DrugGroup ;
+  rdfs:label "Antipyretic"@en ;
+  schema:alternateName "Fever Reducer"@en ;
+  #td:AtcLink dbp: ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Antipyretic> ;
+  .
+
+dbp:Anti-inflammatory
+  a td:DrugGroup ;
+  rdfs:label "Anti-inflammatory"@en ;
+  td:AtcLink dbp:ATC_code_M01 ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Anti-inflammatory> ;
+  .
+
+
+dbp:NSAID
+  a td:DrugGroup ;
+  rdfs:label "Nonsteroidal Anti-Inflammatory Drug"@en ;
+  owl:sameAs dbp:Non-steroidal_anti-inflammatory_drug ;
+  td:drugGroup dbp:Analgesic ;
+  td:drugGroup dbp:Antipyretic ;
+  td:drugGroup dbp:Anti-inflammatory ;
+  td:contraindication "Alcohol"@en ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Non-steroidal_anti-inflammatory_drug#Adverse_effects> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/NSAID> ;
+  .
+
+dbp:Acetaminophen
+  a dbp:Therapy ;
+  rdfs:label "Acetaminophen"@en ;
+  schema:alternateName "Tylenol"@en ;
+  schema:alternateName "APAP"@en ;
+  owl:sameAs dbp:Paracetamol ;
+  td:drugGroup dbp:Analgesic ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Paracetamol#Adverse_effects> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Paracetamol_toxicity> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a681004.html#side-effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a681004.html#overdose> ;
+  td:contraindicationsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a681004.html#precautions> ;
+  td:contraindication "Alcohol"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a681004.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Acetaminophen> ;
+  .
+
+dbp:Aspirin
+  a dbp:Therapy ;
+  rdfs:label "Aspirin"@en ;
+  td:drugGroup dbp:Analgesic ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Aspirin#Adverse_effects> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Aspirin_poisoning> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682878.html#side-effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682878.html#overdose> ;
+  td:contraindicationsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682878.html#precautions> ;
+  td:contraindication "Alcohol"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682878.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Aspirin> ;
+  .
+
+dbp:Ibuprofen
+  a dbp:Therapy ;
+  rdfs:label "Ibuprofen"@en ;
+  schema:alternateName "Advil"@en ;
+  schema:alternateName "Motrin"@en ;
+  td:drugGroup dbp:Analgesic ;
+  td:drugGroup dbp:Antipyretic ;
+  td:drugGroup dbp:Anti-inflammatory ;
+  td:effect dbp:Vasodilation ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Ibuprofen#Adverse_effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682159.html#side-effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682159.html#overdose> ;
+  td:contraindicationsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682159.html#precautions> ;
+  td:contraindication "Alcohol"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682159.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Ibuprofen> ;
+  .
+
+dbp:Naproxen
+  a dbp:Therapy ;
+  rdfs:label "Naproxen"@en ;
+  schema:alternateName "Aleve"@en ;
+  td:drugGroup dbp:Analgesic ;
+  td:drugGroup dbp:Antipyretic ;
+  td:drugGroup dbp:Anti-inflammatory ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Aleve#Adverse_effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a681029.html#side-effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a681029.html#overdose> ;
+  td:contraindicationsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a681029.html#precautions> ;
+  td:contraindication "Alcohol"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a681029.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Naproxen> ;
+  .
+
+dbp:Opioid
+  a td:DrugGroup ;
+  a dbp:Therapy ;
+  rdfs:label "Opioid"@en ;
+  td:drugGroup dbp:Analgesic ;
+  schema:alternateName "Codeine"@en ;
+  schema:alternateName "Hydrocodone"@en ;
+  schema:alternateName "Morphine"@en ;
+  schema:alternateName "Oxycodon (Oxycontin)"@en ;
+  schema:alternateName "Methadone"@en ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Opioid#Adverse_effects> ;
+  td:contraindication "Alcohol"@en ;
+  td:contraindication "Antihistamines"@en ;
+  td:contraindication "Antipsychotics"@en ;
+  td:contraindication "Antianxiety"@en ;
+  td:contraindication "CNS Depressants"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Opioid> ;
+  .
+
+
+## psycholeptic
+dbp:Psycholeptic
+  a td:DrugGroup ;
+  rdfs:label "Psycholeptic"@en ;
+  td:AtcLink dbp:ATC_code_N05 ;
+  td:medlineLink <http://www.nimh.nih.gov/health/publications/mental-health-medications/index.shtml> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Psycholeptic> ;
+  .
+
+
+## anxiolytic
+dbp:Anxiolytic
+  a td:DrugGroup ;
+  td:drugGroup dbp:Psycholeptic ;
+  rdfs:label "Anxiolytic"@en ;
+  schema:alternateName "Anti-anxiety"@en ;
+  td:AtcLink dbp:ATC_code_N05B ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Anxiolytic> ;
+  .
+
+
+dbp:Ethanol
+  a dbp:Therapy ; ###
+  rdfs:label "Ethanol"@en ;
+  schema:alternateName "Alcohol"@en ;
+  td:drugGroup dbp:Antifungal ;
+  td:AtcLink dbp:ATC_code_D01 ;
+  td:AtcLink dbp:ATC_code_J02 ;
+  td:drugGroup dbp:Antiseptic ;
+  td:drugGroup dbp:Disinfectant ;
+  td:AtcLink dbp:ATC_code_D08 ;
+  td:drugGroup dbp:Hypnotic ;
+  td:drugGroup dbp:Sedative ;
+  td:AtcLink dbp:ATC_code_N05C ;
+  td:drugGroup dbp:Antidote ;
+  td:AtcLink dbp:ATC_code_V03AB ;
+  td:drugGroup dbp:Neurotoxin ;
+  td:drugGroup dbp:Adenosinergic ;
+  td:drugGroup dbp:Adrenergic ;
+  td:drugGroup dbp:Dopaminergic ;
+  td:drugGroup dbp:Glutamatergic ;
+  td:drugGroup dbp:Opioid ;
+  td:drugGroup dbp:Serotenergic ;
+  td:drugGroup dbp:Neruomodulator ;
+  td:drugGroup dbp:GABAergic ;
+  td:drugGroup dbp:Anxiolytic ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Ethanol#Drug_effects> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Short-term_effects_of_alcohol> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Long-term_effects_of_alcohol> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Alcoholic_liver_disease> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Alcohol_withdrawal_syndrome> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Alcoholism> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Fetal_alcohol_syndrome> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Ethanol> ;
+  .
+
+dbp:Benzodiazepine
+  a td:DrugGroup ;
+  rdfs:label "Benzodiazepine"@en ;
+  schema:alternateName "Benzo"@en ;
+  td:drugGroup dbp:Anticonvulsant ;
+  td:AtcLink dbp:ATC_code_N03 ;
+  td:drugGroup dbp:Anxiolytic ;
+  td:AtcLink dbp:ATC_code_N05B ;
+  td:drugGroup dbp:Euphoriant;
+  td:drugGroup dbp:Hypnotic ;
+  td:drugGroup dbp:Sedative ;
+  td:AtcLink dbp:ATC_code_N05C ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Benzodiazepine#Adverse_effects> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Long-term_effects_of_benzodiazepines> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Benzodiazepine_withdrawal_syndrome> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Benzodiazepine_overdose> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Benzodiazepine> ;
+  .
+
+
+## antidepressants
+dbp:Antidepressant
+  a td:DrugGroup ;
+  rdfs:label "Antidepressant"@en ;
+  td:AtcLink dbp:ATC_code_N06 ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/antidepressants.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Antidepressant> ;
+  .
+
+dbp:SSRI
+  a td:DrugGroup ;
+  rdfs:label "Selective Serotonin Reuptake Inhibitor"@en ;
+  td:drugGroup dbp:Antidepressant ;
+  td:drugGroup dbp:Anxiolytic ;
+  td:AtcLink dbp:ATC_code_N06A ;
+  schema:alternateName "Zoloft"@en ;
+  schema:alternateName "Prozac"@en ;
+  schema:alternateName "Paxil"@en ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/SSRI#Adverse_effects> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/SSRI> ;
+  .
+
+
+dbp:MAOI
+  a td:DrugGroup ;
+  rdfs:label "Monoamine Oxidase Inhibitor"@en ;
+  td:drugGroup dbp:Antidepressant ;
+  td:AtcLink dbp:ATC_code_N06A ;
+  td:drugGroup dbp:Anxiolytic ;
+  td:AtcLink dbp:ATC_code_N05B ;
+  td:drugGroup dbp:Antiparkinson ;
+  td:AtcLink dbp:ATC_code_N04 ;
+  td:drugGroup dbp:Sympatholytic ;
+  td:drugGroup dbp:Antihypertensive ;
+  td:AtcLink dbp:ATC_code_C02 ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/MAOI#Dangers> ;
+  td:contraindicationsLink <https://en.wikipedia.org/wiki/MAOI#Dangers> ;
+  td:contraindication "SSRIs"@en ;
+  td:contraindication "MDMA"@en ;
+  td:contraindication "Dextrothromorphan"@en ;
+  td:contraindication "St. John's Wort"@en ;
+  td:contraindication "Tramadol"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/MAOI> ;
+  .
+
+dbp:Tobacco
+  a dbp:Therapy ;
+  rdfs:label "Tobacco"@en ;
+  td:drugGroup dbp:MAOI ;
+  td:drugGroup dbp:Stimulant ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Health_effects_of_tobacco> ;
+
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Tobacco> ;
+  .
+
+dbp:SNRI
+  a td:DrugGroup ;
+  rdfs:label "Selective Neurotonin Reuptake Inhibitor"@en ;
+  td:drugGroup dbp:Adrenergic ;
+  td:drugGroup dbp:Serotenergic ;
+  td:drugGroup dbp:Antidepressant ;
+  td:AtcLink dbp:ATC_code_N06A ;
+  td:drugGroup dbp:Analgesic ;
+  td:AtcLink dbp:ATC_code_N02A ;
+  td:AtcLink dbp:ATC_code_N02B ;
+  td:drugGroup dbp:Anti-obesity_drug ;
+  td:drugGroup dbp:Anorectic ;
+  td:AtcLink dbp:ATC_code_A08 ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/SNRI#Side-effects> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/SNRI#Overdose> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/SSRI#Adverse_effects> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/SNRI> ;
+  .
+
+
+## antiepiletics
+dbp:Anticonvulsant
+  a td:DrugGroup ;
+  owl:sameAs dbp:Antiepileptic ;
+  rdfs:label "Antiepileptic"@en ;
+  schema:alternateName "Anti-seizure"@en ;
+  td:AtcLink dbp:ATC_code_N03 ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Antiepileptic> ;
+  .
+
+### Symptoms and Adverse Effects
+
+dbp:Peptic_ulcer
+  a dbp:Adverse_effect ;
+  rdfs:label "Peptic ulcer"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/pepticulcer.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Peptic_ulcer> ;
+  .
+
+dbp:Serotonin_syndrome
+  a td:Adverse_effect ;
+  rdfs:label "Serotonin Syndrome" ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/ency/article/007272.htm> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Serotonin_syndrome> ;
+  .
+
+
+## glaucoma / ocular hypertension
+dbp:Glaucoma
+  a dbp:Disease ;
+  rdfs:label "Glaucoma"@en ;
+  td:hasSymptom dbp:Nausea ;
+  td:hasSymptom dbp:Headache ;
+  td:hasSymptom dbp:Vomiting ;
+  td:hasSymptom dbp:Ocular_hypertension ;
+  td:hasSymptom dbp:Blindness ; # 2nd leading cause of Blindness worldwide
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/glaucoma.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Glaucoma> ;
+  .
+
+dbp:Ocular_hypertension
+  a dbp:Symptom ;
+  rdfs:label "Ocular Hypertension"@en ;
+  td:mayIndicate dbp:Glaucoma ;
+  td:hasSymptom dbp:Headache ;
+  td:hasSymptom dbp:Vomiting ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Ocular_hypertension> ;
+  .
+
+dbp:Headache
+  a dbp:Adverse_effect ;
+  a dbp:Symptom ;
+  rdfs:label "Headache"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/headache.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Headache> ;
+  .
+
+dbp:Migraine
+  a dbp:Adverse_effect ;
+  a dbp:Symptom ;
+  rdfs:label "Migraine"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/migraine.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Migraine> ;
+  .
+
+dbp:Nausea
+  a dbp:Adverse_effect ;
+  a dbp:Symptom ;
+  rdfs:label "Nausea"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/nauseaandvomiting.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Nausea> ;
+  .
+
+dbp:Vomiting
+  a dbp:Adverse_effect ;
+  a dbp:Symptom ;
+  rdfs:label "Vomiting"@en ;
+  owl:sameAs dbp:Emesis ;
+  schema:alternateName "Emetic response"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/nauseaandvomiting.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Vomiting> ;
+  .
+
+
+dbp:Blindness
+  a dbp:Symptom ;
+  a dbp:Adverse_effect ;
+  rdfs:label "Blindness"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/visionimpairmentandblindness.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Blindness> ;
+  .
+
+
+## epilepsy
+dbp:Epilepsy
+  a dbp:Disease ;
+  rdfs:label "Epilepsy"@en ;
+  td:hasSymptom dbp:Seizure ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/epilepsy.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Epilepsy> ;
+  .
+
+dbp:Seizure
+  a dbp:Symptom ;
+  a dbp:Adverse_effect ;
+  rdfs:label "Seizure"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Seizure> ;
+  .
+
+
+## also (TODO)
+
+dbp:Vasodilation
+  a td:Cardiovascular_Response ; # TODO
+  rdfs:label "Vasodilation"@en ;
+  rdfs:description "Widening (dilation) of blood vessels"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Vasodilation> ;
+  # ethanol (alcohol)
+  # [...]
+  # relieves Intraocular hypertension
+  .
+
+
+dbp:Vasoconstriction
+  a td:Cardiovascular_Response ; # TODO
+  rdfs:label "Vasoconstriction"@en ;
+  rdfs:description "Narrowing (contraction) of blood vessels"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Vasoconstriction> ;
+  # antihistamines
+  # decongestants
+  # stimulants
+  #  caffeine
+  #  nicotine
+  # increases intraocular hypertension
+  .
+
+## antihistamine
+
+dbp:Antihistamine
+  a td:DrugGroup ;
+  rdfs:label "Antihistamine"@en ;
+  schema:alternateName "Histamine Antagonist"@en ;
+  owl:sameAs dbp:Histamine_antagonist ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Histamine_antagonist> ;
+  .
+
+dbp:Diphenhydramine
+  a dbp:Therapy ;
+  td:drugGroup dbp:Antihistamine ;
+  rdfs:label "Diphenhydramine (Benadryl)"@en ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Diphenhydramine#Adverse_effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682539.html#side-effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682539.html#overdose> ;
+  td:contraindicationsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682539.html#precautions> ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682539.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Diphenhydramine> ;
+  .
+
+dbp:Fexofenadine
+  a dbp:Therapy ;
+  td:drugGroup dbp:Antihistamine ;
+  rdfs:label "Fexofenadine (Allegra)"@en ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Fexofenadine#Side_effects> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Fexofenadine#Overdose> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a697035.html#side-effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a697035.html#overdose> ;
+  td:contraindicationsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a697035.html#precautions> ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a697035.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Fexofenadine> ;
+  .
+
+dbp:Loratadine
+  a dbp:Therapy ;
+  td:drugGroup dbp:Antihistamine ;
+  rdfs:label "Loratadine (Claritin)"@en ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Loratadine#Adverse_effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a697038.html#side-effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a697038.html#overdose> ;
+  td:contraindicationsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a697038.html#precautions> ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a697038.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Loratadine> ;
+  .
+
+## decongestants
+dbp:Decongestant
+  a td:DrugGroup ;
+  rdfs:label "Decongestant"@en ;
+  td:effect dbp:Vasoconstriction ;
+  td:effect "Reduced inflammation"@en ;
+  .
+
+dbp:Ephedrine
+  a dbp:Therapy ;
+  td:drugGroup dbp:Decongestant ;
+  rdfs:label "Ephedrine"@en ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Ephedrine#Adverse_effects> ;
+  td:contraindicationsLink <https://en.wikipedia.org/wiki/Ephedrine#Contraindications> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Ephedrine> ;
+  .
+
+dbp:Pseudoephedrine
+  a dbp:Therapy ;
+  td:drugGroup dbp:Decongestant ;
+  rdfs:label "Pseudoephedrine (-D)"@en ;
+  schema:alternateName "Sudafed"@en ;
+  schema:alternateName "Allegra D"@en ;
+  # http://www.nlm.nih.gov/medlineplus/druginfo/meds/a601053.html
+  schema:alternateName "Claritin D"@en ;
+  schema:alternateName "Zyrtec D"@en ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Pseudoephedrine#Adverse_effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682619.html#side-effects> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682619.html#overdose> ;
+  td:contraindicationsLink <https://en.wikipedia.org/wiki/Pseudoephedrine#Precautions_and_contraindications> ;
+  td:contraindicationsLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682619.html#precautions> ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682619.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Pseudoephedrine#Precautions_and_contraindications> ;
+  .
+
+
+dbp:Tetrahydrozoline
+  a dbp:Therapy ;
+  rdfs:label "Tetrahydrozoline"@en ;
+  schema:alternateName "Visine"@en ;
+  td:effect dbp:Vasoconstriction ;
+  td:contraindication dbp:Glaucoma ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Visine#Adverse_effects> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Visine#Visine_prank_myth> ;
+  td:adverseEffectsLink <http://www.nlm.nih.gov/medlineplus/ency/article/002590.htm> ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682563.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Tetrahydrozoline_hydrochloride> ;
+  .
+
+#
+
+dbp:Allergy
+  a dbp:Immune_response ; # TODO
+  rdfs:label "Allergy"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/allergy.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Allergy> ;
+  owl:sameAs <https://en.wikipedia.org/wiki/Allergic_response> ;
+  .
+
+dbp:Food_allergy
+  a dbp:Allergy ;
+  rdfs:label "Food Allergy"@en ;
+  td:symptomsLink <https://en.wikipedia.org/wiki/Food_allergy#Signs_and_symptoms> ;
+  td:causedByLink <https://en.wikipedia.org/wiki/Food_allergy#Possible_causes> ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/foodallergy.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Food_allergy> ;
+  .
+
+dbp:Anaphylaxis
+  a dbp:Adverse_effect ;
+  a dbp:Symptom ;
+  a dbp:Allergic_reaction ;
+  rdfs:label "Anaphylaxis"@en ;
+  schema:alternateName "Allergic Reaction"@en ;
+  td:symptomsLink <https://en.wikipedia.org/wiki/Allergy#Signs_and_symptoms> ;
+  td:causedByLink <https://en.wikipedia.org/wiki/Allergy#Cause> ;
+  td:causedByLink <https://en.wikipedia.org/wiki/Food_allergy> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Anaphylaxis> ;
+  .
+
+dbp:Peanut
+  a dbp:Food ;
+  rdfs:label "Peanut"@en ;
+  td:adverseEffect dbp:Analphylaxis ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Peanut#Health_concerns> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Peanut_allergy> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Peanut> ;
+  .

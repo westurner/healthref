@@ -1,0 +1,78 @@
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="jellywrd.css">
+    <!-- link ref="stylesheet"
+    href="https://raw.github.com/westurner/pygments-style-jellywrd/master/jellywrd.css"> -->
+    <style>
+        body { background: #f0f0f0 }
+        pre { background: #000 }
+        hr { border-top: 1px solid #ddd }
+        ul.toc { list-style-type: none }
+        ul.properties { list-style-type: none }
+    </style>
+</head>
+<body>
+<div class="container" id="content">
+{%- block content -%}
+<h1>{{ title }}</h1>
+<h2 id="contents">Contents</h2>
+<ul class='toc'>
+    <li><a href="#contents">Contents</a></li>
+    {% for key, obj in object['sections'].iteritems() %}
+    <li><a href="#{{ key }}">{{ obj['title'] }}</a>
+        <ul class="toc">
+        {% for _key, group in object[key].iteritems() %}
+        <li><a href="#{{ group['slug'] }}">{{ group['label'] }}</a></li>
+        {% endfor %}
+        </ul>
+    </li>
+    {% endfor %}
+    <li><a href="#source">Source</a></li>
+</ul>
+
+{% macro section(slug, title) %}
+<div class="section">
+<h2 id="{{ slug }}">{{ title }}
+    <small><span class="toplink"><a href="#contents">^</a></span></small>
+</h2>
+<ul class='toc'>
+{% for key, group in object[slug].iteritems() %}
+    <li><a href="#{{ group['slug'] }}">{{ group['label'] }}</a></li>
+{% endfor %}
+</ul>
+{% for key, group in object[slug].iteritems() %}
+<h3 id="{{ group['slug'] }}">{{ group['label'] }}
+    <small><span class="toplink"><a href="#{{ slug }}">^</a></span></small>
+</h3>
+  {% for key, items in group['properties'].iteritems() %}
+  <h5>{{ items['label'] }}</h5>
+  <ul class="properties">
+    {% for value, link in items["objects"].iteritems() %}
+    <li>
+    {%- if link -%}
+      <a href="{{ link }}">{{ value }}</a>
+    {%- else -%}
+      <span>{{ value }}</span>
+    {%- endif -%}
+    </li>
+    {%- endfor -%}
+  </ul>
+  {% endfor %}
+  <hr>
+{%- endfor -%}
+</div>
+{% endmacro %}
+
+{% for key, obj in object['sections'].iteritems() %}
+{{ section(key, obj['title']) }}
+{% endfor %}
+
+
+<h2 id="source">Source</h2>
+{{ source }}
+{%- endblock content -%}
+</div>
+</body>
+</html>
