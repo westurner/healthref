@@ -7,6 +7,11 @@ Generates a static HTML reference page from RDF
 (in `Turtle syntax <https://en.wikipedia.org/wiki/Turtle_(syntax)>`_).
 
 
+Example
+---------
+https://westurner.github.io/healthref/
+
+
 Usage
 ------
 Install::
