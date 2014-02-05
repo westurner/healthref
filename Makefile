@@ -4,7 +4,7 @@
 default: html
 
 html:
-	python ./healthapp.py -i ./treatment_alternatives.ttl -o index.html
+	python ./healthref.py -i ./treatment_alternatives.ttl -o index.html
 
 serve:
 	python -m SimpleHTTPServer 28080

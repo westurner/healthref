@@ -2,7 +2,7 @@
 # encoding: utf-8
 from __future__ import print_function
 """
-healthapp
+healthref
 """
 import os
 import logging
@@ -31,6 +31,8 @@ NAMESPACES = (
     (u'xml', 'http://www.w3.org/XML/1998/namespace'),
     (u'xsd', 'http://www.w3.org/2001/XMLSchema#'),
 )
+
+
 def get_namespace_manager(set_globals=False):
     nsm = rdflib.namespace.NamespaceManager(rdflib.Graph())
     for key, value in NAMESPACES:
@@ -48,6 +50,7 @@ def set_namespace_globals(nsm):
         if _key in glbls:
             raise Exception("clobbering globals: %r" % _key)
         glbls[_key] = namespace
+
 
 def print_namespace_globals(nsm):
     for key, value in sorted(nsm.namespaces()):
@@ -72,6 +75,8 @@ RDF_INPUT_FORMATS = {
     'ttl': 'text/turtle',
     'jsonld': 'json-ld'
 }
+
+
 def read_rdf_files(input_files, graph=None):
     if graph is None:
         graph = rdflib.ConjunctiveGraph()
@@ -83,11 +88,13 @@ def read_rdf_files(input_files, graph=None):
                 location=os.path.abspath(input_file))
     return graph
 
+
 def get_label(g, subject):
     output = g.preferredLabel(subject, lang='en')
     if not output:
         return unicode(subject) # TODO: qname?
     return unicode(output[0][-1])
+
 
 DEFAULT_PREDICATE_ORDERING = [
     RDF.type,
@@ -134,6 +141,7 @@ def iter_subjects(g, subjects,
                 iter_subj_pred(g, subject,
                     predicate_ordering=predicate_ordering))})
 
+
 def iter_section(g, object, slug_prefix,
                  predicate_ordering=DEFAULT_PREDICATE_ORDERING):
     #groups = sorted(g.query("SELECT ?s WHERE { ?s a ?object }"))
@@ -153,17 +161,17 @@ def pygmentize(filename):
         return pygments.highlight(f.read(), lexer, formatter)
 
 
-def get_template(template='healthapp.html'):
+def get_template(template='healthref.html'):
     env = jinja2.Environment(
         autoescape=True,) # ... TODO
     loader = jinja2.FileSystemLoader(
         os.path.dirname(
             os.path.abspath(__file__)))
-    tmpl = loader.load(env, 'healthapp.html')
+    tmpl = loader.load(env, 'healthref.html')
     return tmpl
 
 
-def healthapp(input_files, output):
+def healthref(input_files, output):
     """
     mainfunc
     """
@@ -238,7 +246,7 @@ def healthapp(input_files, output):
             key,
             predicate_ordering=obj['predicate_ordering'])
 
-    tmpl = get_template('healthapp.html')
+    tmpl = get_template('healthref.html')
 
     return tmpl.render({
         'title': "Health Reference",
@@ -250,7 +258,7 @@ def healthapp(input_files, output):
 
 
 import unittest
-class Test_healthapp(unittest.TestCase):
+class Test_healthref(unittest.TestCase):
     input_files = ('treatment_alternatives.ttl',)
     def test_get_namespace_manager(self):
         nsm = get_namespace_manager()
@@ -273,9 +281,9 @@ class Test_healthapp(unittest.TestCase):
         #from pprint import pformat
         #print(pformat(c))
 
-    def test_z_healthapp(self):
+    def test_z_healthref(self):
         output = sys.stdout
-        output.write( healthapp(self.input_files, output) )
+        output.write( healthref(self.input_files, output) )
         output.flush()
 
 
@@ -329,7 +337,7 @@ def main(*args):
         prs.error("Must specify at least one input file with -i/--input")
 
     try:
-        output.write( healthapp(opts.input_files, output))
+        output.write( healthref(opts.input_files, output))
     finally:
         if opts.output != '-':
             output.close()
