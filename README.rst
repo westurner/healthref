@@ -3,9 +3,25 @@ healthref
 
 A Health Reference Application
 
-Generates a static HTML reference page from an RDF file
-(in [Turtle syntax](https://en.wikipedia.org/wiki/Turtle_\(syntax\))).
+Generates a static HTML reference page from RDF.
 
+Usage
+------
+Install:::
+
+    git clone https://github.com/westurner/healthref
+    pip install -r requirements.txt
+
+Generate:::
+
+    make html
+    # python ./healthref.py -i treatment_alternatives.ttl -o index.html
+
+View:::
+
+    make view
+    # x-www-browser ./index.html
+    
 
 Requirements
 -------------
