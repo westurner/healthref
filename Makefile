@@ -15,4 +15,13 @@ view:
 view_served:
 	x-www-browser http://localhost:28080/
 
+install:
+	pip install -r requirements.txt
 
+push_hg:
+	hg bookmark -f gh-pages
+	hg push
+	hg push -f git+ssh://git@github.com/westurner/healthref
+
+push_git:
+	git push -f ssh://git@github.com/westurner/healthref gh-pages

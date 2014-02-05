@@ -9,17 +9,18 @@ Generates a static HTML reference page from RDF
 
 Usage
 ------
-Install:::
+Install::
 
     git clone https://github.com/westurner/healthref
-    pip install -r requirements.txt
+    make install
+    # pip install -r requirements.txt
 
-Generate:::
+Generate::
 
     make html
     # python ./healthref.py -i treatment_alternatives.ttl -o index.html
 
-View:::
+View::
 
     make view
     # x-www-browser ./index.html
