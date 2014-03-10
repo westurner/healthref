@@ -314,6 +314,8 @@ dbp:Ethanol
   td:adverseEffectsLink <https://en.wikipedia.org/wiki/Alcoholic_liver_disease> ;
   td:adverseEffectsLink <https://en.wikipedia.org/wiki/Alcohol_withdrawal_syndrome> ;
   td:adverseEffectsLink <https://en.wikipedia.org/wiki/Alcoholism> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Alcohol_abuse> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Alcohol_dependence> ;
   td:adverseEffectsLink <https://en.wikipedia.org/wiki/Fetal_alcohol_syndrome> ;
   td:wikipediaLink <https://en.wikipedia.org/wiki/Ethanol> ;
   .
@@ -357,6 +359,7 @@ dbp:SSRI
   schema:alternateName "Prozac"@en ;
   schema:alternateName "Paxil"@en ;
   td:adverseEffectsLink <https://en.wikipedia.org/wiki/SSRI#Adverse_effects> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Post-SSRI_sexual_dysfunction#Sexual_dysfunction> ;
   td:wikipediaLink <https://en.wikipedia.org/wiki/SSRI> ;
   .
 
@@ -385,6 +388,7 @@ dbp:MAOI
 
 dbp:Tobacco
   a dbp:Therapy ;
+  a dbp:Carcinogen ;
   rdfs:label "Tobacco"@en ;
   td:drugGroup dbp:MAOI ;
   td:drugGroup dbp:Stimulant ;
@@ -434,9 +438,23 @@ dbp:Peptic_ulcer
 
 dbp:Serotonin_syndrome
   a td:Adverse_effect ;
-  rdfs:label "Serotonin Syndrome" ;
+  rdfs:label "Serotonin Syndrome"@en ;
   td:medlineLink <http://www.nlm.nih.gov/medlineplus/ency/article/007272.htm> ;
   td:wikipediaLink <https://en.wikipedia.org/wiki/Serotonin_syndrome> ;
+  .
+
+dbp:Anhedonia
+  a td:Adverse_effect ;
+  a td:Symptom ;
+  rdfs:label "Anhedonia"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Anhedonia> ;
+  .
+
+dbp:Sexual_anhedonia
+  a td:Adverse_effect ;
+  a td:Symptom ;
+  rdfs:label "Sexual Anhedonia"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Sexual_anhedonia> ;
   .
 
 
@@ -522,6 +540,14 @@ dbp:Seizure
   td:wikipediaLink <https://en.wikipedia.org/wiki/Seizure> ;
   .
 
+
+## cancer
+dbp:Cancer
+  a dbp:Disease ;
+  rdfs:label "Cancer"@en ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/cancer.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Cancer> ;
+  .
 
 ## also (TODO)
 
@@ -652,7 +678,25 @@ dbp:Allergy
   rdfs:label "Allergy"@en ;
   td:medlineLink <http://www.nlm.nih.gov/medlineplus/allergy.html> ;
   td:wikipediaLink <https://en.wikipedia.org/wiki/Allergy> ;
-  owl:sameAs <https://en.wikipedia.org/wiki/Allergic_response> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/List_of_allergies> ;
+  .
+
+dbp:Allergen
+  a dbp:Antigen ;
+  rdfs:label "Allergen"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Allergen> ;
+  .
+
+dbp:Allergic_rhinitis
+  a dbp:Symptom ;
+  rdfs:label "Allergic Rhinitis"@en ;
+  td:symptom "Sneezing"@en ;
+  td:symptom "Itching"@en ;
+  td:symptom "Watery eyes"@en ;
+  td:symptom "Swelling and inflammation of nasal passages"@en ;
+  td:symptom "Increased mucous production"@en;
+  td:symptom "Runny nose"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Allergic_rhinitis> ;
   .
 
 dbp:Food_allergy
@@ -667,7 +711,7 @@ dbp:Food_allergy
 dbp:Anaphylaxis
   a dbp:Adverse_effect ;
   a dbp:Symptom ;
-  a dbp:Allergic_reaction ;
+  a dbp:Allergic_response ;
   rdfs:label "Anaphylaxis"@en ;
   schema:alternateName "Allergic Reaction"@en ;
   td:symptomsLink <https://en.wikipedia.org/wiki/Allergy#Signs_and_symptoms> ;
@@ -679,8 +723,162 @@ dbp:Anaphylaxis
 dbp:Peanut
   a dbp:Food ;
   rdfs:label "Peanut"@en ;
-  td:adverseEffect dbp:Analphylaxis ;
+  td:adverseEffect dbp:Anaphylaxis ;
   td:adverseEffectsLink <https://en.wikipedia.org/wiki/Peanut#Health_concerns> ;
   td:adverseEffectsLink <https://en.wikipedia.org/wiki/Peanut_allergy> ;
   td:wikipediaLink <https://en.wikipedia.org/wiki/Peanut> ;
   .
+
+dbp:Cat
+  a dbp:Animal ;
+  rdfs:label "Cat"@en ;
+  schema:alternateName "House Cat"@en ;
+  schema:alternateName "Feline"@en ;
+  td:adverseEffect dbp:Anaphylaxis ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Toxoplasmosis> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Allergy_to_cats> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Cat> ;
+  .
+
+dbp:Allergy_to_cats
+  a dbp:Allergic_reaction ;
+  rdfs:label "Allergy to Cats"@en ;
+  schema:alternateName "Cat Allergy"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Allergy_to_cats> ;
+  .
+
+dbp:Toxoplasmosis
+  a dbp:Disease ;
+  a dbp:Parasitic_disease ;
+  rdfs:label "Toxoplasmosis"@en ;
+  td:symptomsLink <https://en.wikipedia.org/wiki/Toxoplasmosis#Signs_and_symptoms> ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/toxoplasmosis.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Toxoplasmosis> ;
+  .
+
+##
+dbp:Pesticide
+  a dbp:Biocide ;
+  a dbp:Poison ;
+  rdfs:label "Pesticide"@en ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Pesticide#Health_effects> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Health_effects_of_pesticides> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Pesticide_poisoning> ;
+  # td:adverseEnvironmentalEffectsLink
+  # <https://en.wikipedia.org/wiki/Environmental_effects_of_pesticides>
+  # ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Pesticide> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Pesticide#Classified_by_type_of_pest> ;
+  .
+
+
+#
+dbp:Carcinogen
+  a dbp:Substance ;
+  rdfs:label "Carcinogen"@en ;
+  schema:alternateName "Cause of Cancer"@en ;
+  td:adverseEffect dbp:Cancer ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Carcinogen> ;
+
+  # carcinogenic
+  td:wikipediaLink <https://en.wikipedia.org/wiki/List_of_IARC_Group_1_carcinogens> ;
+  # probably carcinogenic
+  td:wikipediaLink <https://en.wikipedia.org/wiki/List_of_IARC_Group_2A_carcinogens> ;
+  # possibly carcinogenic
+  td:wikipediaLink <https://en.wikipedia.org/wiki/List_of_IARC_Group_2B_carcinogens> ;
+  .
+
+dbp:International_Agency_for_Research_on_Cancer
+  a dbp:Agency ;
+  rdfs:label "International Agency for Research on Cancer"@en ;
+  schema:alternateName "IARC"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/International_Agency_for_Research_on_Cancer> ;
+  .
+
+td:IARC_Group_1
+  a td:Group ;
+  rdfs:label "IARC Group 1" ;
+  schema:description "Carcinogenic to humans"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/List_of_IARC_Group_1_carcinogens> ;
+  .
+
+dbp:Mineral_oil
+  a dbp:Carcinogen ;
+  td:inGroup td:IARC_Group_1 ;
+  rdfs:label "Mineral Oil"@en ;
+  td:commonlyFoundIn "Cosmetics"@en ;
+  td:commonlyFoundIn "Lotions"@en ;
+  td:commonlyFoundIn "Paints"@en ;
+  .
+
+dbp:Diesel_exhaust
+  a dbp:Carcinogen ;
+  td:inGroup td:IARC_Group_1 ;
+  rdfs:label "Diesel Exhaust"@en ;
+  .
+
+dbp:Tobacco_smoke
+  a dbp:Carcinogen ;
+  td:inGroup td:IARC_Group_1 ;
+  rdfs:label "Tobacco Smoke"@en ;
+  .
+
+
+td:IARC_Group_2A
+  a td:Group ;
+  rdfs:label "IARC Group 2A" ;
+  schema:description "Probably carcinogenic to humans"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/List_of_IARC_Group_2A_carcinogens> ;
+  .
+
+
+td:IARC_Group_2B
+  a td:Group ;
+  rdfs:label "IARC Group 2B" ;
+  schema:description "Possibly carcinogenic to humans"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/List_of_IARC_Group_2B_carcinogens> ;
+  .
+
+
+###
+dbp:Teratogen
+  a dbp:Substance ;
+  rdfs:label "Teratogen"@en ;
+  schema:alternateName "Cause of Birth Defects"@en ;
+  schema:alternateName "Cause of Congenital Disorders"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Teratogen> ;
+  .
+
+dbp:Congenital_disorder
+  a dbp:Disorder ;
+  rdfs:label "Congenital disorder"@en ;
+  schema:alternateName "Disorder existing at birth"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Congenital_disorder> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Congenital_disorder#Causes> ;
+  .
+
+dbp:Developmental_toxicity
+  a dbp:Study ;
+  rdfs:label "Developmental toxicity"@en ;
+  schema:alternateName "Drugs in pregnancy"@en ;
+  td:studyQuestion "Which drugs are safe for pregnant mice and rats?"@en ;
+  td:studyQuestion "Which drugs are safe for pregnant women?"@en ;
+  td:studyQuestion "Which environmental toxins are safe for pregnant women?"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Developmental_toxicity> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Drugs_in_pregnancy> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Environmental_toxins_and_fetal_development> ;
+  .
+
+dbp:Toxin
+  a dbp:Substance ;
+  a dbp:Poison ;
+  rdfs:label "Toxin"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Toxin> ;
+  .
+
+dbp:Air_pollution
+  a dbp:Environmental_toxin ;
+  rdfs:label "Air pollution"@en ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Air_pollution> ;
+  .
+
