@@ -1,5 +1,13 @@
+# healthref.py
+
 -e git+ssh://git@github.com/RDFLib/rdflib#egg=rdflib
 #-e git+ssh://git@github.com/RDFLib/rdflib-jsonld#egg=rdflib-jsonld
 -e git+ssh://git@github.com/mitsuhiko/jinja2#egg=jinja2
 -e hg+ssh://hg@bitbucket.org/birkenfeld/pygments-main#egg=pygments
 -e git+ssh://git@github.com/gniezen/n3pygments#egg=n3pygments
+
+# parse_medline.py
+
+-e git+ssh://git@github.com/kennethreitz/requests#egg=requests
+-e git+ssh://git@github.com/reclosedev/requests-cache#egg=requests-cache
+-e bzr+https://code.launchpad.net/beautifulsoup/#egg=beautifulsoup4

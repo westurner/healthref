@@ -1,5 +1,13 @@
+# healthref.py
+
 rdflib
 #rdflib-jsonld
 jinja2
 pygments
 -e git+https://github.com/gniezen/n3pygments#egg=n3pygments
+
+# parse_medline.py
+
+requests
+requests-cache
+beautifulsoup4
