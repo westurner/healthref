@@ -22,7 +22,7 @@ log.setLevel(logging.DEBUG)
 
 
 NAMESPACES = (
-    (u'dbp', 'https://en.dbpedia.org/resource/'),
+    (u'dbp', 'http://dbpedia.org/resource/'),
     (u'foaf', 'http://xmlns.com/foaf/0.1/'),
     (u'owl', 'http://www.w3.org/2002/07/owl#'),
     (u'rdf', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'),
@@ -61,7 +61,7 @@ def print_namespace_globals(nsm):
 NSM = get_namespace_manager()
 # set_namespace_globals(NSM)
 # print_namespace_globals(NSM)
-DBP = Namespace(u'https://en.dbpedia.org/resource/')
+DBP = Namespace(u'http://dbpedia.org/resource/')
 FOAF = Namespace(u'http://xmlns.com/foaf/0.1/')
 OWL = Namespace(u'http://www.w3.org/2002/07/owl#')
 RDF = Namespace(u'http://www.w3.org/1999/02/22-rdf-syntax-ns#')
