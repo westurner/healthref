@@ -44,7 +44,8 @@
 {% endfor %}
 </ul>
 {% for key, group in object[slug].iteritems() %}
-<h3 id="{{ group['slug'] }}">{{ group['label'] }}
+<h3 id="{{ group['slug'] }}">
+    <a href="#{{ group['slug'] }}">{{ group['label'] }}</a>
     <small><span class="toplink"><a href="#{{ slug }}">^</a></span></small>
 </h3>
   {% for key, items in group['properties'].iteritems() %}
