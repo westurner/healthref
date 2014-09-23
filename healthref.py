@@ -58,8 +58,8 @@ def print_namespace_globals(nsm):
 
 
 NSM = get_namespace_manager()
-#set_namespace_globals(NSM)
-#print_namespace_globals(NSM)
+# set_namespace_globals(NSM)
+# print_namespace_globals(NSM)
 DBP = Namespace(u'https://en.dbpedia.org/resource/')
 FOAF = Namespace(u'http://xmlns.com/foaf/0.1/')
 OWL = Namespace(u'http://www.w3.org/2002/07/owl#')
@@ -80,19 +80,19 @@ RDF_INPUT_FORMATS = {
 def read_rdf_files(input_files, graph=None):
     if graph is None:
         graph = rdflib.ConjunctiveGraph()
-    graph = rdflib.ConjunctiveGraph() # Graph()
+    graph = rdflib.ConjunctiveGraph()  # Graph()
     for input_file in input_files:
         with open(input_file, 'r') as f:
             graph.parse(f,
-                format=RDF_INPUT_FORMATS.get(input_file.split('.')[-1]),
-                location=os.path.abspath(input_file))
+                        format=RDF_INPUT_FORMATS.get(input_file.split('.')[-1]),
+                        location=os.path.abspath(input_file))
     return graph
 
 
 def get_label(g, subject):
     output = g.preferredLabel(subject, lang='en')
     if not output:
-        return unicode(subject) # TODO: qname?
+        return unicode(subject)  # TODO: qname?
     return unicode(output[0][-1])
 
 
@@ -105,7 +105,7 @@ DEFAULT_PREDICATE_ORDERING = [
 
 
 def slugify(content, prefix=None):
-    _content = content.replace(" ","-").lower() # TODO
+    _content = content.replace(" ", "-").lower()  # TODO
     if prefix:
         return u'%s--%s' % (prefix, _content)
     else:
@@ -121,7 +121,7 @@ def iter_pred_obj(g, pred_obj_objects):
 
 def iter_subj_pred(g, subject, predicate_ordering):
     for predicate in predicate_ordering:
-        objects = sorted( g.objects(subject, predicate) )
+        objects = sorted(g.objects(subject, predicate))
         if not objects:
             continue
         yield (predicate, {
@@ -139,7 +139,7 @@ def iter_subjects(g, subjects,
             "slug": slugify(label, slug_prefix),
             "properties": OrderedDict(
                 iter_subj_pred(g, subject,
-                    predicate_ordering=predicate_ordering))})
+                               predicate_ordering=predicate_ordering))})
 
 
 def iter_section(g, object, slug_prefix,
@@ -148,8 +148,8 @@ def iter_section(g, object, slug_prefix,
     subjects = sorted(g.subjects(object=object))
     return OrderedDict(
         iter_subjects(g, subjects,
-                    slug_prefix=slug_prefix,
-                    predicate_ordering=predicate_ordering))
+                      slug_prefix=slug_prefix,
+                      predicate_ordering=predicate_ordering))
 
 
 # TODO: .. JSON-LD + JS implementation (preferredLabel?)
@@ -163,7 +163,7 @@ def pygmentize(filename):
 
 def get_template(template='healthref.html'):
     env = jinja2.Environment(
-        autoescape=True,) # ... TODO
+        autoescape=True,)  # ... TODO
     loader = jinja2.FileSystemLoader(
         os.path.dirname(
             os.path.abspath(__file__)))
@@ -182,8 +182,8 @@ def healthref(input_files, output):
         "title": "Drug Groups",
         "object": TD.DrugGroup,
         "predicate_ordering": [
-            #RDF.type,
-            #RDFS.label,
+            # RDF.type,
+            # RDFS.label,
             OWL.sameAs,
             SCHEMA.alternateName,
             TD.drugGroup,
@@ -241,10 +241,10 @@ def healthref(input_files, output):
 
     for key, obj in sections.iteritems():
         c[key] = iter_section(g,
-            obj['object'],
-            #obj['title'],
-            key,
-            predicate_ordering=obj['predicate_ordering'])
+                              obj['object'],
+                              # obj['title'],
+                              key,
+                              predicate_ordering=obj['predicate_ordering'])
 
     tmpl = get_template('healthref.html')
 
@@ -252,17 +252,19 @@ def healthref(input_files, output):
         'title': "Health Reference",
         'object': c,
         'source': jinja2.Markup(
-             pygmentize('treatment_alternatives.ttl')), # TODO: constant
+            pygmentize('treatment_alternatives.ttl')),  # TODO: constant
     })
 
 
-
 import unittest
+
+
 class Test_healthref(unittest.TestCase):
     input_files = ('treatment_alternatives.ttl',)
+
     def test_get_namespace_manager(self):
         nsm = get_namespace_manager()
-        for k,v in nsm.namespaces():
+        for k, v in nsm.namespaces():
             print(k, v)
         self.assertTrue(nsm)
 
@@ -279,11 +281,11 @@ class Test_healthref(unittest.TestCase):
         import json
         print(json.dumps(c, indent=2))
         #from pprint import pformat
-        #print(pformat(c))
+        # print(pformat(c))
 
     def test_z_healthref(self):
         output = sys.stdout
-        output.write( healthref(self.input_files, output) )
+        output.write(healthref(self.input_files, output))
         output.flush()
 
 
@@ -304,14 +306,14 @@ def main(*args):
                    default='-')
 
     prs.add_option('-v', '--verbose',
-                    dest='verbose',
-                    action='store_true',)
+                   dest='verbose',
+                   action='store_true',)
     prs.add_option('-q', '--quiet',
-                    dest='quiet',
-                    action='store_true',)
+                   dest='quiet',
+                   action='store_true',)
     prs.add_option('-t', '--test',
-                    dest='run_tests',
-                    action='store_true',)
+                   dest='run_tests',
+                   action='store_true',)
 
     args = args and list(args) or sys.argv[1:]
     (opts, args) = prs.parse_args()
@@ -337,7 +339,7 @@ def main(*args):
         prs.error("Must specify at least one input file with -i/--input")
 
     try:
-        output.write( healthref(opts.input_files, output))
+        output.write(healthref(opts.input_files, output))
     finally:
         if opts.output != '-':
             output.close()
