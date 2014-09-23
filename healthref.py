@@ -166,9 +166,11 @@ def get_template(template='healthref.html'):
     env = jinja2.Environment(
         autoescape=True,)  # ... TODO
     loader = jinja2.FileSystemLoader(
-        os.path.dirname(
-            os.path.abspath(__file__)))
-    tmpl = loader.load(env, 'healthref.html')
+        os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)),
+            'templates'))
+    tmpl = loader.load(env, template)
     return tmpl
 
 
