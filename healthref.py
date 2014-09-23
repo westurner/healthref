@@ -4,6 +4,7 @@ from __future__ import print_function
 """
 healthref
 """
+import codecs
 import os
 import logging
 
@@ -82,7 +83,7 @@ def read_rdf_files(input_files, graph=None):
         graph = rdflib.ConjunctiveGraph()
     graph = rdflib.ConjunctiveGraph()  # Graph()
     for input_file in input_files:
-        with open(input_file, 'r') as f:
+        with codecs.open(input_file, 'r', encoding='utf-8') as f:
             graph.parse(f,
                         format=RDF_INPUT_FORMATS.get(input_file.split('.')[-1]),
                         location=os.path.abspath(input_file))
@@ -157,7 +158,7 @@ def iter_section(g, object, slug_prefix,
 def pygmentize(filename):
     lexer = get_lexer_by_name("n3")
     formatter = get_formatter_by_name('html')
-    with open(filename) as f:
+    with codecs.open(filename, encoding='utf-8') as f:
         return pygments.highlight(f.read(), lexer, formatter)
 
 
@@ -333,7 +334,7 @@ def main(*args):
     if opts.output == '-':
         output = sys.stdout
     else:
-        output = open(opts.output, 'w+')
+        output = codecs.open(opts.output, 'w+', encoding='utf-8')
 
     if not opts.input_files:
         prs.error("Must specify at least one input file with -i/--input")
