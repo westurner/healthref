@@ -1,6 +1,7 @@
 @prefix : <> . # TODO
 @prefix dbp: <https://en.dbpedia.org/resource/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix label: <http://purl.org/net/vocab/2004/03/label#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -425,6 +426,38 @@ dbp:Anticonvulsant
   schema:alternateName "Anti-seizure"@en ;
   td:AtcLink dbp:ATC_code_N03 ;
   td:wikipediaLink <https://en.wikipedia.org/wiki/Antiepileptic> ;
+  .
+
+
+## antibiotics
+dbp:Antibiotics
+  a td:DrugGroup ;
+  rdfs:label "Antibiotic"@en ;
+  td:AtcLink dbp:ATC_code_J01 ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Antibiotics#Side-effects> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Antibiotics#Resistance> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Antibiotic_resistance> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Antibiotics> ;
+  .
+
+dbp:Azithromycin
+  a dbp:Therapy ;
+  rdfs:label "Azithromycin"@en ;
+  td:drugGroup dbp:Antibiotics ;
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a697037.html> ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Azithromycin#Adverse_effects> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Azithromycin> ;
+  .
+
+dbp:Gentamicin
+  a dbp:Therapy ;
+  rdfs:label "Gentamicin"@en ; 
+  td:drugGroup dbp:Antibiotics ;
+  schema:alternateName "Gentamycin"@en ;
+  td:adverseEffectsLink <https://en.wikipedia.org/wiki/Gentamicin#Side_effects> ;
+  # Ophthalmic
+  td:medlineLink <http://www.nlm.nih.gov/medlineplus/druginfo/meds/a682669.html> ;
+  td:wikipediaLink <https://en.wikipedia.org/wiki/Gentamicin> ;
   .
 
 ### Symptoms and Adverse Effects
