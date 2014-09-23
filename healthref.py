@@ -342,6 +342,8 @@ def main(*args):
         if opts.output != '-':
             output.close()
 
+    return 0
+
 
 if __name__ == "__main__":
     import sys
