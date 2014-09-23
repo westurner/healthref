@@ -108,7 +108,7 @@ DEFAULT_PREDICATE_ORDERING = [
 def slugify(content, prefix=None):
     _content = content.replace(" ", "-").lower()  # TODO
     if prefix:
-        return u'%s--%s' % (prefix, _content)
+        return u'%s/%s' % (prefix, _content)
     else:
         return _content
 
