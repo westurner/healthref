@@ -26,7 +26,7 @@ view:
 	$(BROWSER) ./index.html
 
 view_served:
-	x-www-browser http://localhost:28080/
+	$(BROWSER) http://localhost:28080/
 
 install:
 	pip install -r requirements.txt
