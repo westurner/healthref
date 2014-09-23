@@ -2,6 +2,12 @@
 ##
 # Makefile for healthapp
 
+ifeq ($(__IS_MAC),true)
+BROWSER="open"
+else
+BROWSER="x-www-browser"
+endif
+
 default: html
 
 html:
@@ -11,7 +17,7 @@ serve:
 	python -m SimpleHTTPServer 28080
 
 view:
-	x-www-browser ./index.html
+	$(BROWSER) ./index.html
 
 view_served:
 	x-www-browser http://localhost:28080/
