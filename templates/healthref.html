@@ -54,7 +54,7 @@
     {% for value, link in items["objects"].iteritems() %}
     <li>
     {%- if link -%}
-      <a href="{{ link }}">{{ value }}</a>
+      <a href="{{ link }}" target="_blank">{{ value }}</a>
     {%- else -%}
       <span>{{ value }}</span>
     {%- endif -%}
